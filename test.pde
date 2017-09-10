@@ -8,12 +8,21 @@ void setup() {
 }
 
 void draw() {
+background(0,0,100);
 }
 
 void mouseMoved() {
-  stroke(0,0,0);
-  point(mouseX, mouseY);
-  redraw();
+  stroke(255,0,127);
+  fill(255,0,127);
+  ellipse(mouseX,mouseY,40,40);
+  //point(mouseX, mouseY);
+  //redraw();
+}
+void mouseDragged() {
+  stroke(255,0,0);
+  fill(255,0,0);
+  ellipse(mouseX,mouseY,40,40);
+  //redraw();
 }
 
 void mousePressed() {
@@ -23,6 +32,7 @@ void mousePressed() {
   stroke(255,0,127);
   fill(255,0,127);
   ellipse(mouseX,mouseY,60,60);
+  redraw();
 
   
   //alert("alert");
