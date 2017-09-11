@@ -18,30 +18,43 @@ void draw() {
   fill(255,0,127);
   ellipse(mouseX,mouseY, 30, 30);
   ellipse(xPos,200,60,60);
+
+    //circle that moves along x axis
     xPos=xPos+xDir;
-  if (xPos>width-30 || xPos<30)
-  {
-    xDir=-xDir;
-  }
-  stroke(255,0,0);
-  fill(255,0,0);
-  ellipse(300,yPos,60,60);
+    if (xPos>width-30 || xPos<30)
+    {
+     xDir=-xDir;
+    }
+    stroke(255,0,0);
+    fill(255,0,0);
+    ellipse(300,yPos,60,60);
+
+    //circle that moves along y axis
     yPos=yPos+yDir;
-  if (yPos>height-30 || yPos<30)
-  {
-    yDir=-yDir;
-  }
+    if (yPos>height-30 || yPos<30)
+    {
+      yDir=-yDir;
+    }
+
+    //circle that moves diagonaly
      int m = millis();
-  stroke(0,255,0);
-  fill(0,255,0);
+    stroke(0,255,0);
+    fill(0,255,0);
     ellipse(m%width,m%height,60,60);
 
-    int s = second()*10;
-  stroke(0,100,0);
-  fill(0,100,0);
-    ellipse(s,300,m%60,60);
+    // circle that moves every 2 sec along x axis
+    int s = second();
+    int s1 = s-1;
 
-
+    if (s%2==0) {
+      stroke(0,100,0);
+      fill(0,100,0);
+      ellipse(s*10,300,m%60,60);}
+    else  {
+      stroke(0,100,0);
+      fill(0,100,0);
+      ellipse(s1*10,300,m%60,60);
+    }
 }
 
 //void mouseMoved() {
