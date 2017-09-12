@@ -55,6 +55,15 @@ void draw() {
       fill(0,100,0);
       ellipse(s1*10,300,m%60,60);
     }
+
+  // Fill affects text color
+  fill(255,255,255);
+  // Show how many seconds there are. It is not since startup, but the seconds from computer's clock: https://processing.org/reference/second_.html
+  text("second() " + second().toString(), width/2, 10);
+  // Show how many milliseconds are from the startup: https://processing.org/reference/millis_.html
+  text("millis() " + millis().toString(), width/2, 20);
+  // Seconds from startup :)
+  text("Math.floor(millis() / 1000) " + (Math.floor(millis() / 1000)).toString(), width/2, 30);
 }
 
 //void mouseMoved() {
