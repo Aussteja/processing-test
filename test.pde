@@ -9,10 +9,10 @@ int period = 4000;
 boolean switchState = false;
 int switchCounter = 0;
 
-int buttonX;
-int buttonY;
-int buttonWidth = 120;
-int buttonHeight = 30;
+var button0 = {
+  width: 120,
+  height: 40
+};
 
 void setup() {
   size(600,400);
@@ -21,8 +21,8 @@ void setup() {
   fill(255,230,75);
   text("Processing.js", width/2, height/2);
 
-  buttonX = width / 2 - buttonWidth / 2;
-  buttonY = height / 2 - buttonHeight / 2;
+  button0.x = width / 2 - button0.width / 2;
+  button0.y = height / 2 - button0.height / 2;
   //noLoop();
 }
 
@@ -62,10 +62,10 @@ void draw() {
   fill(0,100,0);
   ellipse(t*50,300,m%60,60);
 
-  if (isMouseOverButton(mouseX, mouseY)) {
+  if (isMouseOverButton(mouseX, mouseY, button0)) {
     fill(50, 100, 50);
   }
-  rect(buttonX, buttonY, buttonWidth, buttonHeight);
+  drawButton(button0);
   fill(255, 100, 187);
   ellipse(mouseX, mouseY, 5, 5);
 
@@ -88,13 +88,17 @@ void draw() {
   text("Mouse [" + mouseX + ";" + mouseY + "]", width/2, 80);
 }
 
+void drawButton(button) {
+  rect(button.x, button.y, button.width, button.height);
+}
+
 // rect(buttonX, buttonY, buttonWidth, buttonHeight);
-boolean isMouseOverButton(mX, mY){
-  return mX > buttonX && mX < buttonX + buttonWidth && mY > buttonY && mY < buttonY + buttonHeight;
+boolean isMouseOverButton(mX, mY, button){
+  return mX > button.x && mX < button.x + button.width && mY > button.y && mY < button.y + button.height;
 }
 
 void mousePressed() {
-  if (isMouseOverButton(mouseX, mouseY)) {
+  if (isMouseOverButton(mouseX, mouseY, button0)) {
     switchState = !switchState;
     switchCounter = switchCounter + 1;
   }
