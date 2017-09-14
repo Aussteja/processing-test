@@ -3,6 +3,9 @@ int xDir=1;
 int yPos=200;
 int yDir=1;
 
+int step = 0;
+int period = 4000;
+
 void setup() {
   size(600,400);
   textAlign(CENTER, CENTER);
@@ -42,19 +45,14 @@ void draw() {
     fill(0,255,0);
     ellipse(m%width,m%height,60,60);
 
-    // circle that moves every 2 sec along x axis
-    int s = second();
-    int s1 = s-1;
-
-    if (s%2==0) {
-      stroke(0,100,0);
-      fill(0,100,0);
-      ellipse(s*10,300,m%60,60);}
-    else  {
-      stroke(0,100,0);
-      fill(0,100,0);
-      ellipse(s1*10,300,m%60,60);
+    if (step * period < millis()){
+      step = step + 1;
     }
+    int t = step;
+
+    stroke(0,100,0);
+    fill(0,100,0);
+    ellipse(t*50,300,m%60,60);
 
   // Fill affects text color
   fill(255,255,255);
@@ -63,7 +61,11 @@ void draw() {
   // Show how many milliseconds are from the startup: https://processing.org/reference/millis_.html
   text("millis() " + millis().toString(), width/2, 20);
   // Seconds from startup :)
-  text("Math.floor(millis() / 1000) " + (Math.floor(millis() / 1000)).toString(), width/2, 30);
+  text("Math.floor(millis() / 1000) " + (Math.floor(millis() / 1000)).toString() + " [" + (millis() / 1000 % 1).toFixed(2) + "]", width/2, 30);
+  // Pairs ofm seconds from startup :)
+  text("Math.floor(millis() / 2000) " + (Math.floor(millis() / 2000)).toString() + " [" + (millis() / 2000 % 1).toFixed(2) + "]", width/2, 40);
+  // Print current step
+  text("Step: " + step, width/2, 50);
 }
 
 //void mouseMoved() {
