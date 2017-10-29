@@ -1,16 +1,19 @@
 var points = [];
 
 void setup() {
-  size(600,400);
+  size(window.innerWidth, window.innerHeight);
 }
 
 void draw() {
   noStroke();
-  background(200);
+  background(0);
 
   if (mouseButton == LEFT)
     addpoint();
     drawpoints();
+
+  if (points.length > 1000)
+    points.splice(0, 1);
 }
 
 void addpoint() {
@@ -20,6 +23,13 @@ void addpoint() {
   p.y = mouseY;
   p.angle = Math.random()*Math.PI*2;
   p.initialTime = millis();
+
+  let r = Math.random()*100 + 155;
+  let g = Math.random()*r*0.5;
+  let b = g;
+  // let g = Math.random()*100 + 155;
+  // let b = Math.random()*100 + 155;
+  p.color = color(r, g, b);
 }
 
 void drawpoints() {
@@ -27,10 +37,11 @@ void drawpoints() {
     let p = points[i];
 
     let dt = millis() - p.initialTime;
-    let distance = (1 - Math.exp(-dt*0.002))*200;
-    let x = p.x + distance*Math.cos(p.angle);
-    let y = p.y + distance*Math.sin(p.angle);
-    fill(255);
+    let edt = 1 - Math.exp(-dt*0.002);
+    let distance = edt*300;
+    let x = p.x + distance*Math.cos(p.angle + dt*0.0001 + edt);
+    let y = p.y + distance*Math.sin(p.angle + dt*0.0001 + edt);
+    fill(p.color);
     ellipse(x, y, 10, 10);
   }
 }
