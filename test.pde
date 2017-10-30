@@ -1,4 +1,5 @@
 var points = [];
+var lastMillis = 0;
 
 void setup() {
   size(window.innerWidth, window.innerHeight);
@@ -11,17 +12,25 @@ void draw() {
   if (mouseButton == LEFT)
     addpoint();
     drawpoints();
+    updatepoints();
 
   if (points.length > 1000)
     points.splice(0, 1);
+
+  lastMillis = millis();
 }
 
 void addpoint() {
   let p = {}
   points.push(p);
-  p.x = mouseX;
-  p.y = mouseY;
-  p.angle = Math.random()*Math.PI*2;
+  p.position = new Point(mouseX, mouseY);
+
+  let angle = -Math.random()*Math.PI;
+  let speed = 300;
+  let vx = Math.cos(angle)*speed;
+  let vy = Math.sin(angle)*speed;
+  p.velocity = new Point(vx, vy);
+
   p.initialTime = millis();
 
   let r = Math.random()*100 + 155;
@@ -35,14 +44,16 @@ void addpoint() {
 void drawpoints() {
   for (int i = 0; i < points.length; ++i) {
     let p = points[i];
-
-    let dt = millis() - p.initialTime;
-    let edt = 1 - Math.exp(-dt*0.002);
-    let distance = edt*300;
-    let x = p.x + distance*Math.cos(p.angle + dt*0.0001 + edt);
-    let y = p.y + distance*Math.sin(p.angle + dt*0.0001 + edt);
     fill(p.color);
-    ellipse(x, y, 10, 10);
+    ellipse(p.position.x, p.position.y, 10, 10);
   }
 }
 
+void updatepoints() {
+  let dt = (millis() - lastMillis)/1000;
+  for (int i = 0; i < points.length; ++i) {
+    let p = points[i];
+    p.position.add(p.velocity.clone().multiplyScalar(dt));
+    p.velocity.y += dt*300;
+  }
+}
