@@ -21,6 +21,13 @@ void draw() {
 }
 
 void addpoint() {
+  let dt = (millis() - lastMillis)/1000;
+  let mouseV = new Point(mouseX - pmouseX, mouseY - pmouseY);
+  mouseV.multiplyScalar(1/dt);
+
+  if (Math.random() + mouseV.magnetude()/500 < 0.9)
+    return;
+
   let p = {}
   points.push(p);
   p.position = new Point(mouseX, mouseY);
@@ -30,6 +37,8 @@ void addpoint() {
   let vx = Math.cos(angle)*speed;
   let vy = Math.sin(angle)*speed;
   p.velocity = new Point(vx, vy);
+
+  p.velocity.add(mouseV);
 
   p.initialTime = millis();
 
@@ -44,13 +53,20 @@ void addpoint() {
 void drawpoints() {
   for (int i = 0; i < points.length; ++i) {
     let p = points[i];
-    fill(p.color);
+    let c = p.color;
+    let speed = p.velocity.magnetude();
+    let k = Math.exp(-speed * 0.001);
+    c = lerpColor(color(255), c, k);
+    fill(c);
     ellipse(p.position.x, p.position.y, 10, 10);
   }
 }
 
 void updatepoints() {
   let dt = (millis() - lastMillis)/1000;
+  let mouseV = new Point(mouseX - pmouseX, mouseY - pmouseY);
+  mouseV.multiplyScalar(1/dt);
+
   for (int i = 0; i < points.length; ++i) {
     let p = points[i];
     p.position.add(p.velocity.clone().multiplyScalar(dt));
@@ -61,6 +77,7 @@ void updatepoints() {
     } else if (p.position.y < 0 || p.position.y > height) {
         p.velocity.y *= -1;
     }
+    p.velocity.add(mouseV.clone().multiplyScalar(dt));
     p.velocity.multiplyScalar(1-dt*0.3);
   }
 }

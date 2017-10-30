@@ -54,13 +54,13 @@ class Point {
     return this.x * point.x + this.y * point.y;
   }
 
-  length() {
+  magnetude() {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
   setLength(newLength) {
     this.assertNumber(newLength);
-    let len = this.length();
+    let len = this.magnetude();
     if (len == 0)
       return this;
 
