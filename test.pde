@@ -26,7 +26,7 @@ void addpoint() {
   p.position = new Point(mouseX, mouseY);
 
   let angle = -Math.random()*Math.PI;
-  let speed = 300;
+  let speed = 300*Math.random();
   let vx = Math.cos(angle)*speed;
   let vy = Math.sin(angle)*speed;
   p.velocity = new Point(vx, vy);
@@ -55,5 +55,12 @@ void updatepoints() {
     let p = points[i];
     p.position.add(p.velocity.clone().multiplyScalar(dt));
     p.velocity.y += dt*300;
+
+    if (p.position.x < 0 || p.position.x > width) {
+      p.velocity.x *= -1;
+    } else if (p.position.y < 0 || p.position.y > height) {
+        p.velocity.y *= -1;
+    }
+    p.velocity.multiplyScalar(1-dt*0.3);
   }
 }
