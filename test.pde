@@ -19,7 +19,10 @@ void mousePressed() {
 bool anyButtonPressed(mousePos) {
   for (int i = 0; i < buttons.length; ++i) {
     if (buttonPressed(buttons[i], mousePos)) {
-      buttons.splice(i, 1);
+      if (Math.random() > 0.5)
+        buttons.splice(i, 1);
+      else
+        buttons[i].radius *= 2;
       return true; 
     }
   }
@@ -39,8 +42,8 @@ void createButton(mousePos) {
 
 void drawButtons() {
   for (int i = 0; i < buttons.length; ++i) {
-    fill(255, 150, 150);
     let b = buttons[i];
-    ellipse(b.position.x, b.position.y, b.radius, b.radius);
+    fill(255 - 2000/b.radius, 150, 150);
+    ellipse(b.position.x, b.position.y, b.radius*2, b.radius*2);
   }
 }
