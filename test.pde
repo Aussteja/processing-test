@@ -8,7 +8,9 @@ void setup() {
 
 void draw() {
   noStroke();
-  background(0);
+  //background(0);
+  fill(0, 0, 0, 5);
+  rect(1, 1, width, height);
 
   if (mouseButton == LEFT)
     addPoint();
@@ -100,7 +102,7 @@ void drawPoints() {
   for (int i = 0; i < points.length; ++i) {
     let p = points[i];
     let c = p.color;
-    let speed = p.velocity.magnetude();
+    let speed = p.velocity.magnitude();
     let k = Math.exp(-speed * 0.001);
     c = lerpColor(color(255), c, k);
     fill(c);
@@ -130,7 +132,7 @@ void updatePoints() {
   for (int i = 0; i < points.length; ++i) {
     let p = points[i];
     p.position.add(p.velocity.clone().multiplyScalar(dt));
-    p.velocity.y += dt*300;
+    p.velocity.y += dt*p.position.y;
 
     if (p.position.x < 0 || p.position.x > width) {
       p.velocity.x *= -1;
