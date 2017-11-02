@@ -6,18 +6,28 @@ void setup() {
 
 void draw() {
   // noStroke();
-  background(200);
+  fill(255, 255, 255, 10);
+  rect(1, 1, width, height);
   drawPixels();
 }
 
 void drawPixels() {
-  let size = 16;
+  let gridSize = 50;
+  let ballSize = 50;
+  let offset = millis()/10;
   noStroke();
 
-  for (int x = 0; x < width; x += size) {
-    for (int y = 0; y < height; y +=size) {
-      fill(x - mouseX, y - mouseY, (1+Math.sin(millis()/100))/2*255);
-      rect(x, y, size, size);
+  for (int x = -gridSize; x < width + gridSize; x += gridSize) {
+    for (int y = -gridSize; y < height + gridSize; y += gridSize) {
+      let mousePos = new Point(mouseX, mouseY);
+      let ballPos = new Point(x + offset % gridSize, y);
+      let dif = mousePos.clone().sub(ballPos);
+      let distance = dif.magnitude();
+      let size = ballSize*100/(distance+100);
+      dif.setLength(size);
+
+      fill(255 - size*4);
+      ellipse(ballPos.x - dif.x, ballPos.y - dif.y, size, size);
     }
   }
 }

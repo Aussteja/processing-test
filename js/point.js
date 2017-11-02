@@ -2,6 +2,10 @@ isNumber = function() {
   return true;
 }
 
+assertNumber = function() {
+
+}
+
 class Point {
   constructor() {
     switch (arguments.length) {
@@ -79,7 +83,7 @@ class Point {
 
   setLength(newLength) {
     assertNumber(newLength);
-    let len = this.length();
+    let len = this.magnitude();
     if (len == 0)
       return this;
 
