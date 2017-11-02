@@ -5,45 +5,19 @@ void setup() {
 }
 
 void draw() {
-  noStroke();
+  // noStroke();
   background(200);
-  drawButtons();
+  drawPixels();
 }
 
-void mousePressed() {
-  let mousePos = new Point(mouseX, mouseY);
-  if (!anyButtonPressed(mousePos))
-    createButton(mousePos);
-}
+void drawPixels() {
+  let size = 16;
+  noStroke();
 
-bool anyButtonPressed(mousePos) {
-  for (int i = 0; i < buttons.length; ++i) {
-    if (buttonPressed(buttons[i], mousePos)) {
-      if (Math.random() > 0.5)
-        buttons.splice(i, 1);
-      else
-        buttons[i].radius *= 2;
-      return true; 
+  for (int x = 0; x < width; x += size) {
+    for (int y = 0; y < height; y +=size) {
+      fill(x - mouseX, y - mouseY, (1+Math.sin(millis()/100))/2*255);
+      rect(x, y, size, size);
     }
-  }
-  return false;
-}
-
-bool buttonPressed(button, mousePos) {
-  return mousePos.clone().sub(button.position).magnitude() < button.radius;
-}
-
-void createButton(mousePos) {
-  let button = {}
-  button.position = mousePos.clone();
-  button.radius = 30;
-  buttons.push(button);
-}
-
-void drawButtons() {
-  for (int i = 0; i < buttons.length; ++i) {
-    let b = buttons[i];
-    fill(255 - 2000/b.radius, 150, 150);
-    ellipse(b.position.x, b.position.y, b.radius*2, b.radius*2);
   }
 }
