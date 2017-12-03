@@ -9,7 +9,7 @@ void setup() {
 void draw() {
   noStroke();
   //background(0);
-  fill(0, 0, 0, 5);
+  fill(0, 0, 0, 20);
   rect(1, 1, width, height);
 
   if (mouseButton == LEFT)
